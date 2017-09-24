@@ -7,7 +7,7 @@ public class BinaryTree implements Iterable {
     private Node root;
 
     public BinaryTree() {
-        this.root = new Node(" ");
+        this.root = new Node(); //Root Node
     }
 
     public void put(String key) {
@@ -15,19 +15,30 @@ public class BinaryTree implements Iterable {
 
         for (int i = 0; i < key.length(); i++) {
             int currentChar = key.charAt(i);
-            if (node.nodes[currentChar] != null) {
-                node = node.nodes[currentChar];
+            if (node.children[currentChar] != null) {
+                node = node.children[currentChar];
                 node.value++;
             } else {
-                node.nodes[currentChar] = new Node();
-                node = node.nodes[currentChar];
+                node.children[currentChar] = new Node();
+                node = node.children[currentChar];
                 node.value = 1;
             }
+            node.isCompleteWord = true;
         }
     }
 
-    public String get() {
-        return null;
+    public int getValue(String key) {
+        Node node = root;
+
+        for (int i = 0; i < key.length(); i++) {
+            int currentChar = key.charAt(i);
+            if (node.children[currentChar] != null) {
+                node = node.children[currentChar];
+            } else {
+                return 0;
+            }
+        }
+        return node.value;
     }
 
     public int count() {
@@ -44,18 +55,9 @@ public class BinaryTree implements Iterable {
     }
 
     private class Node {
-
-        String key;
         int value = 0;
-
-        Node[] nodes = new Node[NUMBER_OF_BRANCHES]; //TODO
-
-        public Node() {
-        }
-
-        public Node(String key) {
-            this.key = key;
-        }
+        boolean isCompleteWord;
+        Node[] children = new Node[NUMBER_OF_BRANCHES];
     }
 
     private class BinaryTreeIterator implements Iterator<BinaryTree> {

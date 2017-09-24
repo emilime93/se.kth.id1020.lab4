@@ -1,17 +1,24 @@
 public class Driver {
 
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
 
+        System.out.println((int) 'a');
 
-        /*
-        If str1 precedes str2, the return key is -1.
-        If it's the other way around, the return key is 1.
-        If they are equal, the return key is 0.
-         */
-        String str1 = "a";
-        String str2 = "b";
-        System.out.println(str1.compareTo(str2));
+        BinaryTree binaryTree = new BinaryTree();
+        for (int i = 0; i < 4; i++) {
+            binaryTree.put("hej");
+        }
+        for (int i = 0; i < 6; i++) {
+            binaryTree.put("joar");
+        }
+        for (int i = 0; i < 2; i++) {
+            binaryTree.put("jos");
+        }
+        System.out.println("hej: " + binaryTree.getValue("hej"));
+        System.out.println("joar: " + binaryTree.getValue("joar"));
+        System.out.println("jos: " + binaryTree.getValue("jos"));
+        System.out.println("äpple: " + binaryTree.getValue("äpple"));
+        System.out.println("j: " + binaryTree.getValue("j"));
     }
 
 }
