@@ -1,12 +1,12 @@
 import java.util.Iterator;
 
-public class BinaryTree implements Iterable {
+public class Trie implements Iterable {
 
     private final static int NUMBER_OF_BRANCHES = 256; // EXTENDED ASCII
 
     private Node root;
 
-    public BinaryTree() {
+    public Trie() {
         this.root = new Node(); //Root Node
     }
 
@@ -27,22 +27,44 @@ public class BinaryTree implements Iterable {
         }
     }
 
-    public int getValue(String key) {
+    private Node traverseTo(String key) {
         Node node = root;
-
         for (int i = 0; i < key.length(); i++) {
             int currentChar = key.charAt(i);
             if (node.children[currentChar] != null) {
                 node = node.children[currentChar];
             } else {
-                return 0;
+                return null;
             }
         }
-        return node.value;
+        return node;
     }
 
-    public int count() {
+    public int getValue(String key) {
+        Node node = traverseTo(key);
+        if (node != null) {
+            return node.value;
+        }
         return 0;
+    }
+
+    public int count(String key) {
+        Node node = traverseTo(key);
+        if (node == null) {
+            return 0;
+        }
+        return count(node);
+    }
+
+    private int count(Node startNode) {
+        int value = startNode.value;
+        for (int i = 0; i < NUMBER_OF_BRANCHES; i++) {
+            if (startNode.children[i] != null) {
+                System.out.println("if passed");
+                value += count(startNode.children[i]);
+            }
+        }
+        return value;
     }
 
     public int distinct() {
@@ -60,13 +82,13 @@ public class BinaryTree implements Iterable {
         Node[] children = new Node[NUMBER_OF_BRANCHES];
     }
 
-    private class BinaryTreeIterator implements Iterator<BinaryTree> {
+    private class BinaryTreeIterator implements Iterator<Trie> {
 
         public boolean hasNext() {
             return false;
         }
 
-        public BinaryTree next() {
+        public Trie next() {
             return null;
         }
 

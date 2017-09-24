@@ -4,21 +4,23 @@ public class Driver {
 
         System.out.println((int) 'a');
 
-        BinaryTree binaryTree = new BinaryTree();
+        Trie trie = new Trie();
         for (int i = 0; i < 4; i++) {
-            binaryTree.put("hej");
+            trie.put("hej");
         }
         for (int i = 0; i < 6; i++) {
-            binaryTree.put("joar");
+            trie.put("joar");
         }
         for (int i = 0; i < 2; i++) {
-            binaryTree.put("jos");
+            trie.put("jos");
         }
-        System.out.println("hej: " + binaryTree.getValue("hej"));
-        System.out.println("joar: " + binaryTree.getValue("joar"));
-        System.out.println("jos: " + binaryTree.getValue("jos"));
-        System.out.println("äpple: " + binaryTree.getValue("äpple"));
-        System.out.println("j: " + binaryTree.getValue("j"));
+        System.out.println("hej: " + trie.getValue("hej"));
+        System.out.println("joar: " + trie.getValue("joar"));
+        System.out.println("jos: " + trie.getValue("jos"));
+        System.out.println("äpple: " + trie.getValue("äpple"));
+        System.out.println("j: " + trie.getValue("j"));
+
+        System.out.println("COUNT \"j\": " + trie.count("j"));
     }
 
 }
