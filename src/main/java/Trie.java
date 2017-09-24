@@ -17,16 +17,23 @@ public class Trie implements Iterable {
             int currentChar = key.charAt(i);
             if (node.children[currentChar] != null) {
                 node = node.children[currentChar];
-                node.value++;
+                if (i == key.length()-1)
+                    node.value++;
             } else {
                 node.children[currentChar] = new Node();
                 node = node.children[currentChar];
-                node.value = 1;
+                if (i == key.length()-1) {
+                    node.value = 1;
+                }
             }
-            node.isCompleteWord = true;
         }
     }
 
+    /**
+     * Godlike helper-method
+     * @param key
+     * @return
+     */
     private Node traverseTo(String key) {
         Node node = root;
         for (int i = 0; i < key.length(); i++) {
@@ -60,15 +67,26 @@ public class Trie implements Iterable {
         int value = startNode.value;
         for (int i = 0; i < NUMBER_OF_BRANCHES; i++) {
             if (startNode.children[i] != null) {
-                System.out.println("if passed");
                 value += count(startNode.children[i]);
             }
         }
         return value;
     }
 
-    public int distinct() {
-        return 0;
+    public int distinct(String key) {
+        Node node = traverseTo(key);
+        return distinct(node);
+    }
+
+    private int distinct(Node startNode) {
+        if (startNode == null) return 0;
+        int numWords = 0;
+        if (startNode.value > 0)
+            numWords++;
+        for (int i = 0; i < NUMBER_OF_BRANCHES; i++) {
+            numWords += distinct(startNode.children[i]);
+        }
+        return numWords;
     }
 
     public Iterator iterator() {
@@ -78,7 +96,6 @@ public class Trie implements Iterable {
 
     private class Node {
         int value = 0;
-        boolean isCompleteWord;
         Node[] children = new Node[NUMBER_OF_BRANCHES];
     }
 
