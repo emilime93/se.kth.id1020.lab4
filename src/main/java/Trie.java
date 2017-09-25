@@ -1,10 +1,13 @@
 import java.util.Iterator;
+import java.util.Map;
 
 public class Trie implements Iterable {
 
     private final static int NUMBER_OF_BRANCHES = 256; // EXTENDED ASCII
 
     private Node root;
+
+    private int numberOfElements = 0;
 
     public Trie() {
         this.root = new Node(); //Root Node
@@ -17,20 +20,22 @@ public class Trie implements Iterable {
             int currentChar = key.charAt(i);
             if (node.children[currentChar] != null) {
                 node = node.children[currentChar];
-                if (i == key.length()-1)
+                if (i == key.length() - 1)
                     node.value++;
             } else {
                 node.children[currentChar] = new Node();
                 node = node.children[currentChar];
-                if (i == key.length()-1) {
+                if (i == key.length() - 1) {
                     node.value = 1;
                 }
             }
         }
+        numberOfElements++;
     }
 
     /**
      * Godlike helper-method
+     *
      * @param key
      * @return
      */
@@ -90,27 +95,32 @@ public class Trie implements Iterable {
     }
 
     public Iterator iterator() {
-
-        return null;
+        return new BinaryTreeIterator();
     }
 
+    /**
+     * INNER CLASS NODE //TODO Descprition
+     */
     private class Node {
         int value = 0;
         Node[] children = new Node[NUMBER_OF_BRANCHES];
     }
 
-    private class BinaryTreeIterator implements Iterator<Trie> {
+    private class BinaryTreeIterator<String, Integer> implements Iterator<Map.Entry<String, Integer>> {
+
+        private int currentIndex = 0;
+
 
         public boolean hasNext() {
-            return false;
+            return numberOfElements > currentIndex;
         }
 
-        public Trie next() {
+        public Map.Entry<String, Integer> next() {
+
             return null;
         }
 
-        public void remove() {
-            /* No implementation */
-        }
+        public void remove() {/*No implementation cause it sux B-) */}
     }
+
 }
